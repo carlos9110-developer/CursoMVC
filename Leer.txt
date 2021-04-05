@@ -1,0 +1,6 @@
+* En el archivo "~/App_Start/BundleConfig.cs" se añadio la siguiente linea para minificar todos los archivos .js y .css , en este archivo se configura la carga de los blunde
+	BundleTable.EnableOptimizations = true;
+
+* Se añadio un filtro para verificar la sesión del usuario, este se encuentra en el archivo "~/Filters/VerifySessions.cs" y para que el sistema lo añada al proyecto y se ejecute antes de cada petición
+a los controladores se debe añadir el filtro en el archivo "~/App_Start/FilterConfig.cs" mediante la siguiente linea
+	filters.Add(new Filters.VerifySessions()); // Filters = Nombre de la carpeta, VerifySessions() // clase que contiene el filtro

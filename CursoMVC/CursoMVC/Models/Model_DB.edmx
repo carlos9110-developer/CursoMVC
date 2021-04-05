@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_DB.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HC_ANIMAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="ID_ANIMAL_CLASE" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HC_CLASE_ANIMAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HC_ESTADOS_USUARIOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="HC_USUARIOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CORREO" Type="varchar2" MaxLength="150" />
+          <Property Name="CLAVE" Type="varchar2" MaxLength="150" />
+          <Property Name="ID_ESTADO" Type="number" Precision="38" Scale="0" />
+          <Property Name="EDAD" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <Association Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+          <End Role="HC_CLASE_ANIMAL" Type="Self.HC_CLASE_ANIMAL" Multiplicity="1" />
+          <End Role="HC_ANIMAL" Type="Self.HC_ANIMAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HC_CLASE_ANIMAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HC_ANIMAL">
+              <PropertyRef Name="ID_ANIMAL_CLASE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HC_USUARIOS_ID_ESTADO">
+          <End Role="HC_ESTADOS_USUARIOS" Type="Self.HC_ESTADOS_USUARIOS" Multiplicity="0..1" />
+          <End Role="HC_USUARIOS" Type="Self.HC_USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HC_ESTADOS_USUARIOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HC_USUARIOS">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Model_DBStoreContainer">
+          <EntitySet Name="HC_ANIMAL" EntityType="Self.HC_ANIMAL" Schema="SIA" store:Type="Tables" />
+          <EntitySet Name="HC_CLASE_ANIMAL" EntityType="Self.HC_CLASE_ANIMAL" Schema="SIA" store:Type="Tables" />
+          <EntitySet Name="HC_ESTADOS_USUARIOS" EntityType="Self.HC_ESTADOS_USUARIOS" Schema="SIA" store:Type="Tables" />
+          <EntitySet Name="HC_USUARIOS" EntityType="Self.HC_USUARIOS" Schema="SIA" store:Type="Tables" />
+          <AssociationSet Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE" Association="Self.FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+            <End Role="HC_CLASE_ANIMAL" EntitySet="HC_CLASE_ANIMAL" />
+            <End Role="HC_ANIMAL" EntitySet="HC_ANIMAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HC_USUARIOS_ID_ESTADO" Association="Self.FK_HC_USUARIOS_ID_ESTADO">
+            <End Role="HC_ESTADOS_USUARIOS" EntitySet="HC_ESTADOS_USUARIOS" />
+            <End Role="HC_USUARIOS" EntitySet="HC_USUARIOS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_DB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HC_ESTADOS_USUARIOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="1" Scale="1" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HC_USUARIOS" Relationship="Model_DB.FK_HC_USUARIOS_ID_ESTADO" FromRole="HC_ESTADOS_USUARIOS" ToRole="HC_USUARIOS" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HC_ESTADOS_USUARIOS" EntityType="Self.HC_ESTADOS_USUARIOS" />
+          <EntitySet Name="HC_USUARIOS" EntityType="Model_DB.HC_USUARIOS" />
+          <AssociationSet Name="FK_HC_USUARIOS_ID_ESTADO" Association="Model_DB.FK_HC_USUARIOS_ID_ESTADO">
+            <End Role="HC_ESTADOS_USUARIOS" EntitySet="HC_ESTADOS_USUARIOS" />
+            <End Role="HC_USUARIOS" EntitySet="HC_USUARIOS" />
+          </AssociationSet>
+          <EntitySet Name="HC_ANIMAL" EntityType="Model_DB.HC_ANIMAL" />
+          <EntitySet Name="HC_CLASE_ANIMAL" EntityType="Model_DB.HC_CLASE_ANIMAL" />
+          <AssociationSet Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE" Association="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+            <End Role="HC_CLASE_ANIMAL" EntitySet="HC_CLASE_ANIMAL" />
+            <End Role="HC_ANIMAL" EntitySet="HC_ANIMAL" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="HC_USUARIOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CORREO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CLAVE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ID_ESTADO" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="EDAD" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="HC_ESTADOS_USUARIOS" Relationship="Model_DB.FK_HC_USUARIOS_ID_ESTADO" FromRole="HC_USUARIOS" ToRole="HC_ESTADOS_USUARIOS" />
+        </EntityType>
+        <Association Name="FK_HC_USUARIOS_ID_ESTADO">
+          <End Type="Model_DB.HC_ESTADOS_USUARIOS" Role="HC_ESTADOS_USUARIOS" Multiplicity="0..1" />
+          <End Type="Model_DB.HC_USUARIOS" Role="HC_USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HC_ESTADOS_USUARIOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HC_USUARIOS">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HC_ANIMAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_ANIMAL_CLASE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="HC_CLASE_ANIMAL" Relationship="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE" FromRole="HC_ANIMAL" ToRole="HC_CLASE_ANIMAL" />
+        </EntityType>
+        <EntityType Name="HC_CLASE_ANIMAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HC_ANIMAL" Relationship="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE" FromRole="HC_CLASE_ANIMAL" ToRole="HC_ANIMAL" />
+        </EntityType>
+        <Association Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+          <End Type="Model_DB.HC_CLASE_ANIMAL" Role="HC_CLASE_ANIMAL" Multiplicity="1" />
+          <End Type="Model_DB.HC_ANIMAL" Role="HC_ANIMAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HC_CLASE_ANIMAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HC_ANIMAL">
+              <PropertyRef Name="ID_ANIMAL_CLASE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_DBStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="HC_ESTADOS_USUARIOS">
+            <EntityTypeMapping TypeName="Model_DB.HC_ESTADOS_USUARIOS">
+              <MappingFragment StoreEntitySet="HC_ESTADOS_USUARIOS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HC_USUARIOS">
+            <EntityTypeMapping TypeName="Model_DB.HC_USUARIOS">
+              <MappingFragment StoreEntitySet="HC_USUARIOS">
+                <ScalarProperty Name="EDAD" ColumnName="EDAD" />
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HC_ANIMAL">
+            <EntityTypeMapping TypeName="Model_DB.HC_ANIMAL">
+              <MappingFragment StoreEntitySet="HC_ANIMAL">
+                <ScalarProperty Name="ID_ANIMAL_CLASE" ColumnName="ID_ANIMAL_CLASE" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HC_CLASE_ANIMAL">
+            <EntityTypeMapping TypeName="Model_DB.HC_CLASE_ANIMAL">
+              <MappingFragment StoreEntitySet="HC_CLASE_ANIMAL">
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

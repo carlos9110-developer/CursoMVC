@@ -1,0 +1,43 @@
+﻿
+@{
+    //ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row">
+    <form id="frm">
+        <div class="col-lg-6 col-lg-offset-3">
+            Usuario
+            <input type="text" name="user" value="" />
+            Password
+            <input type="password" name="pass" value="" />
+            <input type="submit" name="name" value="Entrar" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+
+@section scripts
+{
+<script>
+    function inicio() {
+        $("#frm").submit(function (e) {
+            e.preventDefault();// esta linea se encarga de que no haga el submit clasico
+
+            let url = "@Url.Content("~/Access/Enter/")";
+            console.log
+            let parametros = $(this).serialize(); // con esto tengo los atributos serializados
+            console.log("estos son los parametros",parametros);
+
+            $.post(url, parametros, function (data) {
+                if (data == "1") {
+                    document.location.href = "@Url.Content("~/")";
+                } else {
+                    alert(data);
+                }
+            });
+        });
+    }
+    inicio();
+</script>
+}
+

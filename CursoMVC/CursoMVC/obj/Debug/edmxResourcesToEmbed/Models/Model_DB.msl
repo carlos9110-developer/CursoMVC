@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model_DBStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="HC_ESTADOS_USUARIOS">
+      <EntityTypeMapping TypeName="Model_DB.HC_ESTADOS_USUARIOS">
+        <MappingFragment StoreEntitySet="HC_ESTADOS_USUARIOS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HC_USUARIOS">
+      <EntityTypeMapping TypeName="Model_DB.HC_USUARIOS">
+        <MappingFragment StoreEntitySet="HC_USUARIOS">
+          <ScalarProperty Name="EDAD" ColumnName="EDAD" />
+          <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+          <ScalarProperty Name="CLAVE" ColumnName="CLAVE" />
+          <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HC_ANIMAL">
+      <EntityTypeMapping TypeName="Model_DB.HC_ANIMAL">
+        <MappingFragment StoreEntitySet="HC_ANIMAL">
+          <ScalarProperty Name="ID_ANIMAL_CLASE" ColumnName="ID_ANIMAL_CLASE" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HC_CLASE_ANIMAL">
+      <EntityTypeMapping TypeName="Model_DB.HC_CLASE_ANIMAL">
+        <MappingFragment StoreEntitySet="HC_CLASE_ANIMAL">
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model_DB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="HC_ESTADOS_USUARIOS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Precision="1" Scale="1" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HC_USUARIOS" Relationship="Model_DB.FK_HC_USUARIOS_ID_ESTADO" FromRole="HC_ESTADOS_USUARIOS" ToRole="HC_USUARIOS" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="HC_ESTADOS_USUARIOS" EntityType="Self.HC_ESTADOS_USUARIOS" />
+    <EntitySet Name="HC_USUARIOS" EntityType="Model_DB.HC_USUARIOS" />
+    <AssociationSet Name="FK_HC_USUARIOS_ID_ESTADO" Association="Model_DB.FK_HC_USUARIOS_ID_ESTADO">
+      <End Role="HC_ESTADOS_USUARIOS" EntitySet="HC_ESTADOS_USUARIOS" />
+      <End Role="HC_USUARIOS" EntitySet="HC_USUARIOS" />
+    </AssociationSet>
+    <EntitySet Name="HC_ANIMAL" EntityType="Model_DB.HC_ANIMAL" />
+    <EntitySet Name="HC_CLASE_ANIMAL" EntityType="Model_DB.HC_CLASE_ANIMAL" />
+    <AssociationSet Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE" Association="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+      <End Role="HC_CLASE_ANIMAL" EntitySet="HC_CLASE_ANIMAL" />
+      <End Role="HC_ANIMAL" EntitySet="HC_ANIMAL" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="HC_USUARIOS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CORREO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CLAVE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ID_ESTADO" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="EDAD" Type="Decimal" Precision="38" Scale="0" />
+    <NavigationProperty Name="HC_ESTADOS_USUARIOS" Relationship="Model_DB.FK_HC_USUARIOS_ID_ESTADO" FromRole="HC_USUARIOS" ToRole="HC_ESTADOS_USUARIOS" />
+  </EntityType>
+  <Association Name="FK_HC_USUARIOS_ID_ESTADO">
+    <End Type="Model_DB.HC_ESTADOS_USUARIOS" Role="HC_ESTADOS_USUARIOS" Multiplicity="0..1" />
+    <End Type="Model_DB.HC_USUARIOS" Role="HC_USUARIOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HC_ESTADOS_USUARIOS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HC_USUARIOS">
+        <PropertyRef Name="ID_ESTADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HC_ANIMAL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID_ANIMAL_CLASE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <NavigationProperty Name="HC_CLASE_ANIMAL" Relationship="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE" FromRole="HC_ANIMAL" ToRole="HC_CLASE_ANIMAL" />
+  </EntityType>
+  <EntityType Name="HC_CLASE_ANIMAL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="1" Scale="1" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HC_ANIMAL" Relationship="Model_DB.FK_HC_ANIMAL_ID_ANIMAL_CLASE" FromRole="HC_CLASE_ANIMAL" ToRole="HC_ANIMAL" />
+  </EntityType>
+  <Association Name="FK_HC_ANIMAL_ID_ANIMAL_CLASE">
+    <End Type="Model_DB.HC_CLASE_ANIMAL" Role="HC_CLASE_ANIMAL" Multiplicity="1" />
+    <End Type="Model_DB.HC_ANIMAL" Role="HC_ANIMAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HC_CLASE_ANIMAL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HC_ANIMAL">
+        <PropertyRef Name="ID_ANIMAL_CLASE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

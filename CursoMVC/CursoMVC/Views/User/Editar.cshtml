@@ -1,0 +1,37 @@
+﻿@model CursoMVC.Models.ViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Editar Usuario";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Editar", "User", FormMethod.Post, new { role = "form", id = "form-datos", @class = "" }))
+        {
+            @Html.AntiForgeryToken(); // esto es para que no hagan peticiones de afuera
+            @Html.HiddenFor(m => m.Id)
+
+            @Html.LabelFor(m => m.Correo)
+            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control" })
+            @Html.ValidationMessage("Correo", new { @class = "text-danger" })<br />
+
+            @Html.LabelFor(m => m.Clave)
+            @Html.PasswordFor(m => m.Clave, new { @class = "form-control" })
+            @Html.ValidationMessage("Clave", new { @class = "text-danger" })<br />
+
+            @Html.LabelFor(m => m.ConfirmacionClave)
+            @Html.PasswordFor(m => m.ConfirmacionClave, new { @class = "form-control" })
+            @Html.ValidationMessage("ConfirmacionClave", new { @class = "text-danger" })<br />
+
+            @Html.LabelFor(m => m.Edad)
+            @Html.TextBoxFor(m => m.Edad, new { @class = "form-control" })
+            @Html.ValidationMessage("Edad", new { @class = "text-danger" })
+
+            <div class="text-right">
+                <br />
+                <input type="submit" class="btn btn-success" value="Editar" />
+            </div>
+        }
+    </div>
+</div>
